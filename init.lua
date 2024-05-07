@@ -276,6 +276,9 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
   {
+    'github/copilot.vim',
+  },
+  {
     'R-nvim/cmp-r',
   },
   {
@@ -285,6 +288,7 @@ require('lazy').setup({
       local opts = {
         R_args = { '--quiet', '--no-save' },
         R_path = 'C:/Program Files/R/R-4.3.2/bin/x64',
+        R_app = 'radian',
         hook = {
           on_filetype = function()
             -- This function will be called at the FileType event
