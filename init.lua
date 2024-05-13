@@ -154,6 +154,9 @@ vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
+-- disable wrapping
+vim.opt.wrap = false
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
@@ -169,6 +172,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Open Netrw' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -279,6 +283,17 @@ require('lazy').setup({
     'github/copilot.vim',
   },
   {
+    'ThePrimeagen/harpoon',
+    config = function()
+      require('harpoon').setup {}
+      vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<CR>", { desc = 'Add [A] file to harpoon marks' })
+      vim.keymap.set('n', '<leader>hq', "<cmd>lua require('harpoon.mark').clear_all()<CR>", { desc = 'Clear all [Q]uick marks' })
+      vim.keymap.set('n', '<leader>hp', "<cmd>lua require('harpoon.ui').nav_prev()<CR>", { desc = 'Navigate to [P]revious harpoon mark' })
+      vim.keymap.set('n', '<leader>hn', "<cmd>lua require('harpoon.ui').nav_next()<CR>", { desc = 'Navigate to [N]ext harpoon mark' })
+      vim.keymap.set('n', '<leader>hl', '<cmd>Telescope harpoon marks<CR>', { desc = 'List all harpoon [L]ocations' })
+    end,
+  },
+  {
     'R-nvim/cmp-r',
   },
   {
@@ -288,7 +303,7 @@ require('lazy').setup({
       local opts = {
         R_args = { '--quiet', '--no-save' },
         R_path = 'C:/Program Files/R/R-4.3.2/bin/x64',
-        R_app = 'radian',
+        -- R_app = 'radian',
         hook = {
           on_filetype = function()
             -- This function will be called at the FileType event
@@ -836,12 +851,14 @@ require('lazy').setup({
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'catppuccin/nvim',
+    -- 'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'catppuccin'
+      -- vim.g.tokyonight_style = 'night'
       vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 
@@ -892,6 +909,29 @@ require('lazy').setup({
   },
   {
     'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup {
+        options = { theme = 'catppuccin' },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        extensions = { 'nvim-tree' },
+      }
+    end,
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
