@@ -6,7 +6,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- guicursor = cursorstyle
 vim.o.guicursor = ''
@@ -214,26 +214,13 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
   {
-    'github/copilot.vim',
-    config = function()
-      --   require('copilot.vim').setup {}
-      vim.keymap.set('n', '<leader>iy', '<Plug>(copilot-accept-line)', { desc = 'Cop[i]lot ([y]es) accept' })
-      vim.keymap.set('n', '<leader>id', '<Plug>(copilot-dismiss)', { desc = 'Cop[i]lot [d]ismiss' })
-      vim.keymap.set('n', '<leader>ip', '<Plug>(copilot-previous)', { desc = 'Cop[i]lot [p]revious' })
-      vim.keymap.set('n', '<leader>in', '<Plug>(copilot-next)', { desc = 'Cop[i]lot [n]ext' })
-      vim.keymap.set('n', '<leader>is', '<Plug>(copilot-suggest)', { desc = 'Cop[i]lot [s]uggest' })
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && npm install',
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
     end,
-  },
-  {
-    'ThePrimeagen/harpoon',
-    config = function()
-      require('harpoon').setup {}
-      vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<CR>", { desc = 'Add [A] file to harpoon marks' })
-      vim.keymap.set('n', '<leader>hq', "<cmd>lua require('harpoon.mark').clear_all()<CR>", { desc = 'Clear all [Q]uick marks' })
-      vim.keymap.set('n', '<leader>hp', "<cmd>lua require('harpoon.ui').nav_prev()<CR>", { desc = 'Navigate to [P]revious harpoon mark' })
-      vim.keymap.set('n', '<leader>hn', "<cmd>lua require('harpoon.ui').nav_next()<CR>", { desc = 'Navigate to [N]ext harpoon mark' })
-      vim.keymap.set('n', '<leader>hl', '<cmd>Telescope harpoon marks<CR>', { desc = 'List all harpoon [L]ocations' })
-    end,
+    ft = { 'markdown' },
   },
   {
     'R-nvim/cmp-r',
@@ -891,79 +878,6 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
-  -- Obsidian
-  {
-    'epwalsh/obsidian.nvim',
-    version = '*',
-    lazy = true,
-    ft = 'markdown',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    config = function()
-      -- Create a table with the options to be passed to setup()
-      local opts = {
-        workspaces = {
-          { name = 'personal', path = '~/one_drive/github/obsidian' },
-        },
-        -- Set the default workspace
-        notes_subdir = 'notes',
-        new_notes_location = 'notes_subdir',
-        daily_notes = {
-          folder = 'notes/daily',
-          template = 'templates/daily.md',
-        },
-        templates = {
-          folder = 'templates',
-          date_format = '%Y-%m-%d-%a',
-          time_format = '%H:%M',
-        },
-        disable_frontmatter = false, -- Enable for new notes, disable for templates
-        ui = {
-          enable = true,
-          checkboxes = {
-            [' '] = { char = '󰄱', hl_group = 'ObsidianTodo' },
-            ['x'] = { char = '', hl_group = 'ObsidianDone' },
-            ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
-            ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
-          },
-        },
-        vim.keymap.set('n', '<leader>ot', '<cmd>ObsidianTags<CR>', { desc = '[O]bsidian [T]ags' }),
-        vim.keymap.set('n', '<leader>od', '<cmd>ObsidianDailies<CR>', { desc = '[O]bsidian [D]ailies' }),
-        vim.keymap.set('n', '<leader>oc', '<cmd>ObsidianToggleCheckbox<CR>', { desc = '[O]bsidian [C]heckbox' }),
-        vim.keymap.set('n', '<leader>on', '<cmd>ObsidianNew<CR>', { desc = '[O]bsidian [N]ew note' }),
-        vim.keymap.set('n', '<leader>oe', '<cmd>ObsidianTemplate<CR>', { desc = '[O]bsidian T[e]mplate' }),
-        vim.keymap.set('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = '[O]bsidian [B]acklinks' }),
-        vim.keymap.set('n', '<leader>ol', '<cmd>ObsidianLinks<CR>', { desc = '[O]bsidian [L]inks' }),
-        vim.keymap.set('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = '[O]bsidian [O]pen GUI' }),
-        vim.keymap.set('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = '[O]bsidian [S]earch' }),
-        -- vim.keymap.set('n', '<leader>hq', "<cmd>lua require('harpoon.mark').clear_all()<CR>", { desc = 'Clear all [Q]uick marks' })
-        -- vim.keymap.set('n', '<leader>hp', "<cmd>lua require('harpoon.ui').nav_prev()<CR>", { desc = 'Navigate to [P]revious harpoon mark' })
-        -- vim.keymap.set('n', '<leader>hn', "<cmd>lua require('harpoon.ui').nav_next()<CR>", { desc = 'Navigate to [N]ext harpoon mark' })
-        -- vim.keymap.set('n', '<leader>hl', '<cmd>Telescope harpoon marks<CR>', { desc = 'List all harpoon [L]ocations' })
-      }
-      require('obsidian').setup(opts)
-    end,
-  },
-
-  -- Table Mode
-  {
-    'dhruvasagar/vim-table-mode',
-    event = 'VimEnter',
-    config = function()
-      vim.keymap.set('n', '<leader>tme', '<cmd>TableModeEnable<CR>', { desc = '[T]able [M]ode [E]nable' })
-      vim.keymap.set('n', '<leader>tmd', '<cmd>TableModeDisable<CR>', { desc = '[T]able [M]ode [D]isable' })
-    end,
-  },
-  -- Color Preview
-  {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup()
-    end,
-  },
-
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -1006,44 +920,6 @@ require('lazy').setup({
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
-  },
-  -- {
-  --   'nvim-lualine/lualine.nvim',
-  --   dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-  --   config = function()
-  --     require('lualine').setup {
-  --       options = { theme = 'rose-pine' },
-  --       sections = {
-  --         lualine_a = { 'mode' },
-  --         lualine_b = { 'branch' },
-  --         lualine_c = { 'filename' },
-  --         lualine_x = { 'encoding', 'fileformat', 'filetype' },
-  --         lualine_y = { 'progress' },
-  --         lualine_z = { 'location' },
-  --       },
-  --       inactive_sections = {
-  --         lualine_a = {},
-  --         lualine_b = {},
-  --         lualine_c = { 'filename' },
-  --         lualine_x = { 'location' },
-  --         lualine_y = {},
-  --         lualine_z = {},
-  --       },
-  --       extensions = { 'nvim-tree' },
-  --     }
-  --   end,
-  -- },
-  {
-    -- Pomodoro Timer
-    'epwalsh/pomo.nvim',
-    version = '*', -- Recommended, use latest release instead of latest commit
-    lazy = true,
-    cmd = { 'TimerStart', 'TimerRepeat' },
-    dependencies = {
-      -- Optional, but highly recommended if you want to use the "Default" timer
-      'rcarriga/nvim-notify',
-    },
-    opts = {},
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -1121,7 +997,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
