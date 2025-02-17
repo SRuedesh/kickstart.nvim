@@ -17,6 +17,10 @@ vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.fileformat = 'unix'
 
+-- enable spell checking
+vim.o.spell = true
+vim.o.spelllang = 'en_us'
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -88,7 +92,7 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 
 -- Concealing for easier-to-read Markdown
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 0
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -426,9 +430,14 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      local find_files_custom = function()
+        builtin.find_files {
+          find_command = { 'rg', '--files', '--hidden', '--no-ignore', '--follow', '--glob', '!.git' },
+        }
+      end
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+      vim.keymap.set('n', '<leader>ff', find_files_custom, { desc = '[F]ind [F]iles' })
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
       vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
@@ -635,7 +644,7 @@ require('lazy').setup({
           filetypes = { 'go' },
         },
         r_language_server = {
-          filetypes = { 'r', 'qmd', 'rmd' },
+          filetypes = { 'r', 'qmd', 'rmd', 'quarto' },
         },
         texlab = {
           filetypes = { 'tex' },
@@ -644,7 +653,7 @@ require('lazy').setup({
           filetypes = { 'json' },
         },
         marksman = {
-          filetypes = { 'markdown', 'tex' },
+          filetypes = { 'markdown', 'tex', 'qmd', 'rmd', 'quarto' },
         },
         -- yamlls = {
         --   filetypes = { 'yaml', 'yml' },
