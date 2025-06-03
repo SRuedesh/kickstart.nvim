@@ -31,7 +31,7 @@ return {
       end,
       disable_frontmatter = false, -- Enable for new notes, disable for templates
       ui = {
-        enable = true,
+        enable = false,
         checkboxes = {
           [' '] = { char = '󰄱', hl_group = 'ObsidianTodo' },
           ['x'] = { char = '', hl_group = 'ObsidianDone' },
@@ -72,6 +72,8 @@ return {
       vim.keymap.set('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = '[O]bsidian [O]pen GUI' }),
       vim.keymap.set('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = '[O]bsidian [S]earch' }),
       vim.keymap.set('n', '<leader>of', '<cmd>ObsidianFollowLink<CR>', { desc = '[O]bsidian [F]ollow link' }),
+      vim.keymap.set('n', '<CR>', '<Nop>'), -- Disable default enter mapping
+      vim.keymap.set('n', '<leader><CR>', '<cmd>ObsidianToggleCheckbox<CR>', { desc = '[C]heckbox toggle' }),
     }
     require('obsidian').setup(opts)
   end,

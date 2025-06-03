@@ -2,8 +2,10 @@ return {
   {
     'quarto-dev/quarto-nvim',
     dependencies = {
-      'jmbuhr/otter.nvim',
       'nvim-treesitter/nvim-treesitter',
+    },
+    options = {
+      write_on_disk = true,
     },
   },
 }
