@@ -947,3 +947,23 @@ require('lazy').setup({
 }, {
   ui = {},
 })
+
+if vim.o.termguicolors then
+  vim.g.rout_color_input = 'guifg=#9e9e9e'
+  vim.g.rout_color_normal = 'guifg=#3e8fb0'
+  vim.g.rout_color_number = 'guifg=#f6c177'
+  vim.g.rout_color_integer = 'guifg=#f6c177'
+  vim.g.rout_color_float = 'guifg=#f6c177'
+  vim.g.rout_color_complex = 'guifg=#f6c177'
+  vim.g.rout_color_negnum = 'guifg=#d7afff'
+  vim.g.rout_color_negfloat = 'guifg=#d6afff'
+  vim.g.rout_color_date = 'guifg=#00d7af'
+  vim.g.rout_color_true = 'guifg=#5dd685'
+  vim.g.rout_color_false = 'guifg=#ff5d5e'
+  vim.g.rout_color_inf = 'guifg=#10aed7'
+  vim.g.rout_color_constant = 'guifg=#5fafcf'
+  vim.g.rout_color_string = 'guifg=#5fd7af'
+  vim.g.rout_color_error = 'guifg=#ffffff guibg=#c40000'
+  vim.g.rout_color_warn = 'guifg=#d00000'
+  vim.g.rout_color_index = 'guifg=#d0d080'
+end
