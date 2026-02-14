@@ -10,7 +10,7 @@ return {
     -- Create a table with the options to be passed to setup()
     local opts = {
       workspaces = {
-        { name = 'personal', path = '~/one_drive/github/obsidian' },
+        { name = 'personal', path = '~/local_data/utils/obsidian' },
       },
       -- Set the default workspace
       notes_subdir = '98_unordered',

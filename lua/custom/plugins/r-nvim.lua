@@ -16,14 +16,23 @@ return {
         hook = {
           on_filetype = function()
             vim.api.nvim_buf_set_keymap(0, 'v', '<localleader>rs', '<Plug>RSendSelection', {})
-            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rl', '<Plug>RDSendLine', {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rd', '<Plug>RDSendLine', {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rl', '<Plug>RSendLine', {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>ra', '<Plug>RSendFile', {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>ru', '<Plug>RSendAboveLines', {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rp', '<Plug>RObjectPr', {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rs', '<Plug>RObjectStr', {})
-            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rn', '<Plug>RObjectNames', {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rN', '<Plug>RObjectNames', {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rc', "<Cmd>lua require('r.send').cmd('system2(clearstring)')<CR>", {})
             vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>rh', "<Cmd>lua require('r.run').action('head')<CR>", {})
+            -- devtools
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jt', "<Cmd>lua require('r.send').cmd('devtools::test()')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jl', "<Cmd>lua require('r.send').cmd('devtools::load_all()')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jc', "<Cmd>lua require('r.send').cmd('devtools::check()')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>js', "<Cmd>lua require('r.send').cmd('startup::restart()')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jQ', "<Cmd>lua require('r.send').cmd('Q')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jN', "<Cmd>lua require('r.send').cmd('n')<CR>", {})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<localleader>jC', "<Cmd>lua require('r.send').cmd('c')<CR>", {})
           end,
         },
         R_path = '~/scoop/apps/R/current/bin',
